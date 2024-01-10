@@ -5,7 +5,6 @@
 from typing import Optional
 from typing import List
 
-from 
 class TreeNode:
     def __init__(self, val=0, left=None, right=None):
         self.val = val
@@ -21,3 +20,19 @@ class Solution:
 def getLeafNode(root: Optional[TreeNode]) -> List[int]:
     result = []
     buffer = [root]
+
+    while buffer:
+        currentPosition = buffer.pop()
+        
+        # target check
+        if currentPosition.left is None and currentPosition.right is None:
+            result.append(currentPosition.val)
+        
+        # search next
+        if currentPosition.left is not None:
+            buffer.append(currentPosition.left)
+        
+        if currentPosition.right is not None:
+            buffer.append(currentPosition.right)
+        
+    return result
