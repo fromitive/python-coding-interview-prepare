@@ -71,23 +71,20 @@ class Graph:
         
     def calcuate_minute(self, start: int) -> int:
         visit_to = deque([start])  ## for BFS
-        visit_map = { edge: Visit() for edge in self.graph_map.keys()}
+        visit = set()
         minute = 0
         while len(visit_to) != 0:  # visit_to is not empty
-            current_position = visit_to.popleft()
-            next_positions = self.graph_map[current_position]
-            
-            for position in next_positions:
-                if visit_map[position].not_visit():
-                    # set minute
-                    minute = visit_map[current_position].minute + 1
-                    visit_map[position].set_minute(minute)
-                    visit_map[position].set_visit(True)
-                    
-                    # set next visit
-                    visit_to += self.graph_map[position]
-
-        return minute
+            level_size = len(visit_to)
+            while level_size > 0:
+                current_edge = visit_to.popleft()
+                visit.add(current_edge)
+                next_edges = self.graph_map[current_edge]
+                for edge in next_edges:
+                    if edge not in visit:
+                        visit_to.append(edge)
+                level_size -= 1
+            minute += 1
+        return minute - 1 
 
 
 
@@ -120,6 +117,10 @@ class Solution:
         return graph.calcuate_minute(start)
 
 
+testCases = [
+    ([1,5,3,None,4,10,6,9,2],3),
+    ([1],1),
+]
 
-root = TreeNode.of([1,5,3,None,4,10,6,9,2])
-print(Solution.amountOfTime(root, 3))
+for root,start in testCases:
+    print(Solution.amountOfTime(TreeNode.of(root), start))
