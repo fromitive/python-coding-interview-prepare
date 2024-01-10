@@ -39,25 +39,6 @@ class TreeNode:
 
         return root
 
-
-class Visit:
-    def __init__(self, visit : bool = False, minute : int = 0):
-        self.visit = visit
-        self.minute = minute
-    
-    def not_visit(self) -> bool:
-        return not self.visit
-    
-    def set_visit(self, visit : bool) -> None:
-        self.visit = visit
-    
-    def set_minute(self, minute) -> None:
-        self.minute = minute
-    
-    def get_minute(self) -> int:
-        return self.minute
-    
-
 class Graph:
     def __init__(self):
         self.graph_map = {}
