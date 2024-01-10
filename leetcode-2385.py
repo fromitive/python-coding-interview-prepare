@@ -62,7 +62,7 @@ class Graph:
     def __init__(self):
         self.graph_map = {}
 
-    def create_vertex(self, edge):
+    def create_edge(self, edge):
         self.graph_map[edge] = []
         
     def add_vertex(self, edge, visit_to) -> None :
@@ -70,7 +70,7 @@ class Graph:
             self.graph_map[edge].append(visit_to) 
         
     def calcuate_minute(self, start: int) -> int:
-        visit_to = deque([start])
+        visit_to = deque([start])  ## for BFS
         visit_map = { edge: Visit() for edge in self.graph_map.keys()}
         minute = 0
         while len(visit_to) != 0:  # visit_to is not empty
@@ -95,25 +95,24 @@ class Solution:
     @staticmethod
     def amountOfTime(root: Optional[TreeNode], start: int) -> int:
         def convert_graph(root: Optional[TreeNode]) -> Graph:
-            buffer = deque([root])
+            # (current_node, parent_node)
+            buffer = [(root,None)]
             graph = Graph()
-            parent_position = None
             
             while buffer:
-                current_position = buffer.popleft()
-                graph.create_vertex(current_position.val)
+                current_node, parent_node = buffer.pop()
+                graph.create_edge(current_node.val)
 
-                if current_position.left:
-                    graph.add_vertex(current_position.val, current_position.left.val)
-                    buffer.append(current_position.left)
+                if current_node.left:
+                    graph.add_vertex(current_node.val, current_node.left.val)
+                    buffer.append((current_node.left, current_node))
                     
-                if current_position.right:
-                    graph.add_vertex(current_position.val, current_position.right.val)
-                    buffer.append(current_position.right)
+                if current_node.right:
+                    graph.add_vertex(current_node.val, current_node.right.val)
+                    buffer.append((current_node.right, current_node))
                 
-                if parent_position:
-                    graph.add_vertex(current_position.val, parent_position.val)
-                parent_position = current_position
+                if parent_node:
+                    graph.add_vertex(current_node.val, parent_node.val)
                 
             return graph
 
