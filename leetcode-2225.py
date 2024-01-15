@@ -27,8 +27,26 @@ class Solution:
         answer[1] = sorted(find_matcher(match_table, lose_count=1))
         return answer
 
+    def findWinners_another(self, matches: List[List[int]]) -> List[List[int]]:
+        MAX_INPUT_LIMIT = 100001
+        losses = [0] * MAX_INPUT_LIMIT
         
-    
+        # 0 is unvisited
+        # -1 is visited
+        # 1 > is lose_count
+        for winner, loser in matches:
+            if losses[winner] == 0:
+                losses[winner] = -1
+                
+            if losses[loser] == -1:  
+                losses[loser] = 1
+            else:
+                losses[loser] += 1
+                
+        zero_lose = [target for target in range(1,MAX_INPUT_LIMIT) if losses[target] == -1]
+        one_lose = [target for target in range(1,MAX_INPUT_LIMIT) if losses[target] == 1]
+        
+        return [zero_lose, one_lose]
 
     
 if __name__ == "__main__":
@@ -40,5 +58,5 @@ if __name__ == "__main__":
         [[1,2,10],[4,5,7,8]],
     ]
     for idx, (testcase, expected_value) in enumerate(zip(testcases,expected_values),start = 1):
-        answer = solution.findWinners(testcase)
+        answer = solution.findWinners_another(testcase)
         print(answer,expected_value,"TestResult :",answer == expected_value)
