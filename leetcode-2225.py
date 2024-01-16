@@ -29,21 +29,21 @@ class Solution:
 
     def findWinners_another(self, matches: List[List[int]]) -> List[List[int]]:
         MAX_INPUT_LIMIT = 100001
-        losses = [0] * MAX_INPUT_LIMIT
+        losses = [-1] * MAX_INPUT_LIMIT
         
         # 0 is unvisited
         # -1 is visited
         # 1 > is lose_count
         for winner, loser in matches:
-            if losses[winner] == 0:
-                losses[winner] = -1
+            if losses[winner] == -1:
+                losses[winner] = 0
                 
             if losses[loser] == -1:  
                 losses[loser] = 1
             else:
                 losses[loser] += 1
                 
-        zero_lose = [target for target in range(1,MAX_INPUT_LIMIT) if losses[target] == -1]
+        zero_lose = [target for target in range(1,MAX_INPUT_LIMIT) if losses[target] == 0]
         one_lose = [target for target in range(1,MAX_INPUT_LIMIT) if losses[target] == 1]
         
         return [zero_lose, one_lose]
