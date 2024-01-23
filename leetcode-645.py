@@ -19,3 +19,8 @@ class Solution:
                 original_num = v
     
         return [duplicated_num, original_num]
+    
+    def findErrorNums_advenced(self, nums: List[int]) -> List[int]:
+        # 중복된 수에서 중복을 제거하면 중복된 수를 구할 수 있음
+        # 원래 sequence에서 중복을 제거하면 원래 숫자를 구할 수 있음 
+        return [sum(nums) - sum(set(nums)), sum(range(1, len(nums) + 1)) - sum(set(nums))]
