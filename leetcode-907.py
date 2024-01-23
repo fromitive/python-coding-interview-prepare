@@ -27,7 +27,22 @@ class Solution:
             
         return sum(result) % (10 ** 9 + 7)
     
+    def sumSubarrayMins_reverse(self, arr: List[int]) -> int:
+        arr = arr + [0]
+        result = [0] * len(arr)
+        stack  = [len(arr) - 1] # append last idx
+        
+        # iterate reverse order
+        for current_idx in range(len(arr) - 1, -1, -1):
+            while arr[stack[-1]] > arr[current_idx]:
+                stack.pop()
+            before_idx = stack[-1]
+            result[current_idx] = arr[current_idx] * (before_idx - current_idx) + result[before_idx] 
+            
+            stack.append(current_idx)
+            
+        return sum(result) % (10 ** 9 + 7)
 solution = Solution()
 
-solution.sumSubarrayMins([3, 1, 2, 5, 4])
+print(solution.sumSubarrayMins_reverse([3,1,2,4]))
     
