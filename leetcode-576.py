@@ -1,6 +1,5 @@
 # https://leetcode.com/problems/out-of-boundary-paths
 
-from collections import deque
 class Solution:
     def findPaths(self, m: int, n: int, maxMove: int, startRow: int, startColumn: int) -> int:
         MOVE_DIRECTIONS = [ [1, 0], [-1, 0], [0, 1], [0, -1]]
