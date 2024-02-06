@@ -19,4 +19,17 @@ class Solution:
         
         return previous_cache[k]
     
-print(Solution().kInversePairs(3,1))
+    def kInversePairs_with_2d_cache(self, n: int, k: int) -> int:
+        MOD = 10 ** 9 + 7
+        cache = [[0]* (k + 1) for _ in range(n + 1)]
+        cache[0][0] = 1
+        for n_idx in range(1, n + 1):
+            for k_idx in range(k + 1):
+                for pair in range(n_idx):
+                    if k_idx - pair >= 0:
+                        cache[n_idx][k_idx] += cache[n_idx - 1][k_idx - pair] % MOD
+                    
+
+        return cache[n][k]        
+    
+print(Solution().kInversePairs_with_2d_cache(3,2))
